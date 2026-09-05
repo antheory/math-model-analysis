@@ -1,0 +1,16 @@
+npe = 2      # 1要素あたりの節点数（線分なので2）
+ndim = 2     # 2次元
+npoin = 2 * (nx + ny) # 境界節点は角を重複させないので npoin = nelem
+nelem = 2 * (nx + ny) # 境界要素は「境界上の線分」：合計 nelem
+u = np.zeros(nelem)  #   u  : 境界上のポテンシャル
+un = np.zeros(nelem) #   un : 境界上の法線微分 du/dn
+xe = np.zeros((nelem, ndim)) # 要素中心座標 xe[ie]
+xp = np.zeros((npoin, ndim)) # 節点座標 xp[ip]
+# 要素の接続 icon[ie] = (ip0,ip1)
+icon = np.zeros((nelem, npe), dtype=np.int64)
+# 境界条件　i_bd[ie] = 0 Dirichlet（uが既知）
+#         i_bd[ie] = 1: Neumann  （unが既知）
+i_bd = np.zeros(nelem, dtype=np.int64)
+v_bd = np.zeros(nelem)        # 既知値（Dirichletならu、Neumannならun）
+re = np.zeros(nelem)          # 要素長 re[ie] 
+unx = np.zeros((nelem, ndim)) # 外向き単位法線 unx[ie]
